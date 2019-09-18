@@ -35,6 +35,7 @@ GameObject.prototype.destroy = function() {
 
 function CharacterStats(stats) {
   this.healthPoints = stats.healthPoints;
+  GameObject.call(this, stats)
 }
 
 CharacterStats.prototype = Object.assign(GameObject.prototype);
@@ -55,8 +56,9 @@ CharacterStats.prototype.takeDamage = function() {
 
 function Humanoid(characteristics) {
   this.team = characteristics.team;
-  this.weapon = characteristics.weapon;
+  this.weapons = characteristics.weapons;
   this.language = characteristics.language;
+  CharacterStats.call(this, characteristics)
 }
 
 Humanoid.prototype = Object.assign(CharacterStats.prototype);
