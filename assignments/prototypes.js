@@ -26,58 +26,43 @@ GameObject.prototype.destroy = function() {
   return `${this.name} was removed from the game.`;
 }
 
-/*
-  === CharacterStats ===
-  * healthPoints
-  * takeDamage() // prototype method -> returns the string '<object name> took damage.'
-  * should inherit destroy() from GameObject's prototype
-*/
+CharacterStats.prototype = Object.assign(GameObject.prototype);
 
 function CharacterStats(stats) {
-  this.healthPoints = stats.healthPoints;
   GameObject.call(this, stats)
+  this.healthPoints = stats.healthPoints;
 }
-
-CharacterStats.prototype = Object.assign(GameObject.prototype);
 
 CharacterStats.prototype.takeDamage = function() {
   return `${this.name} took damage.`;
 }
 
-/*
-  === Humanoid (Having an appearance or character resembling that of a human.) ===
-  * team
-  * weapons
-  * language
-  * greet() // prototype method -> returns the string '<object name> offers a greeting in <object language>.'
-  * should inherit destroy() from GameObject through CharacterStats
-  * should inherit takeDamage() from CharacterStats
-*/
+Humanoid.prototype = Object.assign(CharacterStats.prototype);
 
 function Humanoid(characteristics) {
+  CharacterStats.call(this, characteristics);
   this.team = characteristics.team;
   this.weapons = characteristics.weapons;
   this.language = characteristics.language;
-  CharacterStats.call(this, characteristics)
 }
-
-Humanoid.prototype = Object.assign(CharacterStats.prototype);
 
 Humanoid.prototype.greet = function() {
   return `${this.name} offers a greeing in ${this.language}.`;
 }
 
-function Villain(attack) {
-  Humanoid.call(this, attack)
-}
-
 Villain.prototype = Object.assign(Humanoid.prototype);
 
-function Hero(attack) {
-  Humanoid.call(this, attack)
+function Villain(move) {
+  Humanoid.call(this, move)
+  this.attack = move.attack;
 }
 
 Hero.prototype = Object.assign(Humanoid.prototype);
+
+function Hero(move) {
+  Humanoid.call(this, move)
+  this.attack = move.attack;
+}
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -150,6 +135,7 @@ Hero.prototype = Object.assign(Humanoid.prototype);
     team: 'Koopa',
     weapons: 'Fireball',
     language: 'Reptile gibberish',
+    attack: 5
   });
 
   const mario = new Hero ({
@@ -163,7 +149,8 @@ Hero.prototype = Object.assign(Humanoid.prototype);
     name: 'Mario',
     team: 'Mushroom Kingdom',
     weapons: 'Red Shell',
-    language: 'Italian gibberish'
+    language: 'Italian gibberish',
+    attack: 7
   });
 
   console.log(mage.createdAt); // Today's date
@@ -176,13 +163,12 @@ Hero.prototype = Object.assign(Humanoid.prototype);
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-
-
-  
-
-  
+  console.log(mario);
+  console.log(bowser);
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+  // FIGHT!
