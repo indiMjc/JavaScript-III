@@ -67,6 +67,17 @@ Humanoid.prototype.greet = function() {
   return `${this.name} offers a greeing in ${this.language}.`;
 }
 
+function Villain(attack) {
+  Humanoid.call(this, attack)
+}
+
+Villain.prototype = Object.assign(Humanoid.prototype);
+
+function Hero(attack) {
+  Humanoid.call(this, attack)
+}
+
+Hero.prototype = Object.assign(Humanoid.prototype);
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -127,6 +138,34 @@ Humanoid.prototype.greet = function() {
     language: 'Elvish',
   });
 
+  const bowser = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 5,
+      width: 5,
+      height: 10,
+    },
+    healthPoints: 30,
+    name: 'Bowser',
+    team: 'Koopa',
+    weapons: 'Fireball',
+    language: 'Reptile gibberish',
+  });
+
+  const mario = new Hero ({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 1,
+      height: 3,
+    },
+    healthPoints: 25,
+    name: 'Mario',
+    team: 'Mushroom Kingdom',
+    weapons: 'Red Shell',
+    language: 'Italian gibberish'
+  });
+
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
@@ -138,6 +177,10 @@ Humanoid.prototype.greet = function() {
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
+
+  
+
+  
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
